@@ -1,6 +1,6 @@
 {
     "name": "AdaptiveCards.NET",
-    "rootNamespace": "",
+    "rootNamespace": "AdaptiveCards",
     "references": [
     ],
     "includePlatforms": [
