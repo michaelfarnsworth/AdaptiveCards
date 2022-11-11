@@ -73,8 +73,8 @@ try {
     # Copy the desired package files to a temp directory
     (Get-ChildItem -Path "$folderFullPath") | Where { $excludeList -notcontains $_ } | ForEach-Object {
         if (-not(Test-Path "$TempDirectory")) {
+            Write-Verbose "Creating temp folder: $TempDirectory"
             New-Item "$TempDirectory" -ItemType Directory
-            Write-Output "Created folder: $TempDirectory"
         }
 
         Copy-Item -Path $_.FullName -Destination "$TempDirectory" -Force -Recurse
