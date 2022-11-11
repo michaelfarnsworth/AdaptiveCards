@@ -14,5 +14,5 @@ jobs:
     - name: Pack and publish
       run: |
         ${{ github.workspace }}/scrips/upm/pack-upm.ps1 -ProjectRoot '${{ github.workspace }}' -Version '2.7.3' -Verbose'
-        ${{ github.workspace }}/scrips/upm/publish-upm.ps1 -RegistryPath 'https://pkgs.dev.azure.com/EDT/EDT/_packaging/mr.upm/npm/registry/'
+        ${{ github.workspace }}/scrips/upm/publish-upm.ps1 -RegistryPath "https://pkgs.dev.azure.com/EDT/EDT/_packaging/mr.upm/npm/registry/"
       shell: pwsh
