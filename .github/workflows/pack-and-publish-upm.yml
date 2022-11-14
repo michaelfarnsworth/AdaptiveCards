@@ -14,11 +14,11 @@ jobs:
     - name: Get Version
       run: |
         $version = ${{ github.workspace }}/scripts/upm/getversion-dotnet.ps1 -ProjectRoot '${{ github.workspace }}'
-        echo "BUILD_VERSION=$version"
+        echo ".NET Version=$version"
       shell: pwsh
       
     - name: Pack and publish
       run: |
-        ${{ github.workspace }}/scripts/upm/pack-upm.ps1 -ProjectRoot '${{ github.workspace }}' -Version '$version' -Verbose
+        ${{ github.workspace }}/scripts/upm/pack-upm.ps1 -ProjectRoot '${{ github.workspace }}' -Version "$version" -Verbose
         ${{ github.workspace }}/scripts/upm/publish-upm.ps1 -PackageDirectory "${{ github.workspace }}/artifacts/upm" -RegistryPath "https://pkgs.dev.azure.com/EDT/EDT/_packaging/mr.upm/npm/registry/" -Authenticate
       shell: pwsh
