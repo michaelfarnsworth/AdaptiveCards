@@ -13,7 +13,7 @@ jobs:
 
     - name: Get Version
       run: |
-        $version = ${{ github.workspace }}/scripts/upm/getversion-dotnet.ps1
+        $version = ${{ github.workspace }}/scripts/upm/getversion-dotnet.ps1 -ProjectRoot '${{ github.workspace }}'
         echo "BUILD_VERSION=$version"
       shell: pwsh
       
