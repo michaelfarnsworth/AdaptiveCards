@@ -1,0 +1,24 @@
+# This is a basic workflow that is manually triggered
+
+name: Pack and Publish UPM
+
+on: workflow_dispatch
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Get Version
+      run: |
+        $version = ${{ github.workspace }}/scripts/upm/getversion-dotnet.ps1
+        echo "BUILD_VERSION=$version"
+      shell: pwsh
+      
+    - name: Pack and publish
+      run: |
+        ${{ github.workspace }}/scripts/upm/pack-upm.ps1 -ProjectRoot '${{ github.workspace }}' -Version '$version' -Verbose
+        ${{ github.workspace }}/scripts/upm/publish-upm.ps1 -PackageDirectory "${{ github.workspace }}/artifacts/upm" -RegistryPath "https://pkgs.dev.azure.com/EDT/EDT/_packaging/mr.upm/npm/registry/" -Authenticate
+      shell: pwsh
