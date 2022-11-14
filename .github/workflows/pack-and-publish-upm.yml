@@ -15,6 +15,6 @@ jobs:
       run: |
         $version = ${{ github.workspace }}/scripts/upm/getversion-dotnet.ps1 -ProjectRoot '${{ github.workspace }}'
         echo "DOTNET_VERSION=$version"
-        ${{ github.workspace }}/scripts/upm/pack-upm.ps1 -ProjectRoot '${{ github.workspace }}' -Version $Env:DOTNET_VERSION -Verbose
+        ${{ github.workspace }}/scripts/upm/pack-upm.ps1 -ProjectRoot '${{ github.workspace }}' -Version "$version" -Verbose
         ${{ github.workspace }}/scripts/upm/publish-upm.ps1 -PackageDirectory "${{ github.workspace }}/artifacts/upm" -RegistryPath "https://pkgs.dev.azure.com/EDT/EDT/_packaging/mr.upm/npm/registry/" -Authenticate
       shell: pwsh
