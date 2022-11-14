@@ -13,6 +13,6 @@ jobs:
 
     - name: Pack and publish
       run: |
-        ${{ github.workspace }}/scripts/upm/pack-upm.ps1 -ProjectRoot '${{ github.workspace }}' -Version "2.7.3" -Verbose
+        ${{ github.workspace }}/scripts/upm/pack-upm.ps1 -ProjectRoot '${{ github.workspace }}' -Version ${{ github.workspace }}/scripts/upm/getversion-dotnet.ps1" -Verbose
         ${{ github.workspace }}/scripts/upm/publish-upm.ps1 -PackageDirectory "${{ github.workspace }}/artifacts/upm" -RegistryPath "https://pkgs.dev.azure.com/EDT/EDT/_packaging/mr.upm/npm/registry/" -Authenticate
       shell: pwsh
