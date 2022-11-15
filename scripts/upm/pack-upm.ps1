@@ -80,6 +80,9 @@ try {
         Copy-Item -Path $_.FullName -Destination "$TempDirectory" -Force -Recurse
     }
 
+    # Update the version number in the package.json
+    ((Get-Content -Path $package.FullName -Raw) -Replace '("version": )"([0-9.]+-?[a-zA-Z0-9.]*|%version%)', "`$1`"$Version") | Set-Content -Path $package.FullName -NoNewline
+
     # Copy the associated .meta files
     (Get-ChildItem -Path "$metaFilesRootDirectory/*" -Filter "*.meta" -Recurse) | ForEach-Object {
 

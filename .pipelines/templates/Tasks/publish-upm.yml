@@ -34,7 +34,7 @@ steps:
   inputs:
     pwsh: true
     targetType: filePath
-    filePath: ${{ parameters.projectRoot }}/scripts/upm/publish-upm.ps1
+    filePath: $(Build.SourcesDirectory)/scripts/upm/publish-upm.ps1
     arguments: >
       -PackageDirectory: ${{ parameters.packageDirectory }}
 
