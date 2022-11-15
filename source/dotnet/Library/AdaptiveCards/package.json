@@ -1,6 +1,6 @@
 {
   "name": "com.microsoft.adaptivecards.net",
-  "version": "2.7.3",
+  "version": "%version%",
   "displayName": "Adaptive Cards",
   "description": "For incorporating Adaptive Cards in Unity.",
   "author": "Microsoft",

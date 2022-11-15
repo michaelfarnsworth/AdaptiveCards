@@ -47,7 +47,7 @@ if (-not (Test-Path $OutputDirectory -PathType Container)) {
 $OutputDirectory = Resolve-Path -Path $OutputDirectory
 Write-Verbose "OutputDirectory: $OutputDirectory"
 
-$TempDirectory = "$OutputDirectory/AdaptiveCards"
+$TempDirectory = Join-Path -Path $OutputDirectory -ChildPath "AdaptiveCards"
 Write-Verbose "TempDirectory: $TempDirectory"
 
 try {
@@ -55,7 +55,7 @@ try {
 
     $parseVersion = -not $Version
 
-    $packages = Get-ChildItem -Path $ProjectRoot/source/dotnet/Library/AdaptiveCards/package.json
+    $packages = Get-ChildItem -Path (Join-Path -Path $ProjectRoot -ChildPath "source/dotnet/Library/AdaptiveCards/package.json")
     if ($packages.Count -ne 1) {
         Write-Output "Error looking for package at $ProjectRoot/source/dotnet/Library/AdaptiveCards/package.json. Expecting 1 package, found $packages.Count"
         return;
@@ -64,7 +64,7 @@ try {
     $package = $packages[0];
     $packagePath = $package.Directory
 
-    $metaFilesRootDirectory = "$ProjectRoot/scripts/upm/meta-files/"
+    $metaFilesRootDirectory = Join-Path -Path $ProjectRoot -ChildPath "scripts/upm/meta-files"
 
     $folderFullPath = "$packagePath/*"
 
@@ -80,8 +80,10 @@ try {
         Copy-Item -Path $_.FullName -Destination "$TempDirectory" -Force -Recurse
     }
 
+    $packageFileTempPath = Join-Path -Path $TempDirectory -ChildPath "package.json"
+
     # Update the version number in the package.json
-    ((Get-Content -Path $package.FullName -Raw) -Replace '("version": )"([0-9.]+-?[a-zA-Z0-9.]*|%version%)', "`$1`"$Version") | Set-Content -Path $package.FullName -NoNewline
+    ((Get-Content -Path $package.FullName -Raw) -Replace '("version": )"([0-9.]+-?[a-zA-Z0-9.]*|%version%)', "`$1`"$Version") | Set-Content -Path $packageFileTempPath -NoNewline
 
     # Copy the associated .meta files
     (Get-ChildItem -Path "$metaFilesRootDirectory/*" -Filter "*.meta" -Recurse) | ForEach-Object {
@@ -91,7 +93,10 @@ try {
         $tmp = Get-Location
         Set-Location $rootDir
         $relativePath = Resolve-Path -relative $currentDir
-        Copy-Item -Path $_.FullName -Destination "$OutputDirectory/$relativePath" -Force
+
+        $currentTargetDir = Join-Path -Path $OutputDirectory -ChildPath $relativePath
+
+        Copy-Item -Path $_.FullName -Destination $currentTargetDir -Force
         Set-Location $tmp
     }
 

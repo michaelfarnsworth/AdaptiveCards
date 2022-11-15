@@ -2,13 +2,6 @@ name: UPM-CI $(Year:yy).$(Month).$(DayOfMonth).$(rev:r)
 
 pr: none
 
-trigger:
-  branches:
-    include:
-    - upm
-    - upm-pipeline
-  batch: True
-
 variables:
   packageDirectory: "./artifacts/upm"
 

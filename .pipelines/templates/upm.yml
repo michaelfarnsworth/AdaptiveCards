@@ -29,7 +29,7 @@ steps:
       artifactName: "adaptivecards-upm"
 
 - ${{ if eq(parameters.publishToFeed, true) }}:
-  - template: Tasks/publish-upm.yml
+  - template: tasks/publish-upm.yml
     parameters:
       packageDirectory: ${{ parameters.outputDirectory }}
       registryPath: $(UpmRegistry)
