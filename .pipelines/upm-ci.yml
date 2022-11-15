@@ -18,7 +18,7 @@ steps:
   - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
     displayName: 'Component Detection'
 
-  - template: Templates/upm.yaml
+  - template: Templates/upm.yml
     parameters:
       registryPath: $(registryPath)
       packageDirectory: $(packageDirectory)
